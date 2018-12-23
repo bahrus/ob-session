@@ -1,6 +1,6 @@
 {
   "name": "ob-session",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "TBD",
   "main": "ob-session.js",
   "scripts": {
