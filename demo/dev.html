@@ -8,8 +8,10 @@
 </head>
 <body>
     <div>
-        <ob-session-watch></ob-session-watch>
+        <ob-session-update key="myObj" value='{"greeting": "hello"}'></ob-session-update>
+        <ob-session-watch key="myObj"></ob-session-watch>
         <script type="module" src="../ob-session-watch.js"></script>
+        <script type="module" src="../ob-session-update.js"></script>
     </div>
 </body>
 </html>

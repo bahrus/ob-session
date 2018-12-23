@@ -1,5 +1,6 @@
 export const session_storage_item_set = 'session-storage-item-set';
 const win = window;
+export function init() { }
 if (!win.__obSessionCache) {
     win.__obSessionCache = {};
 }

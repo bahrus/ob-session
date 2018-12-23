@@ -10,6 +10,11 @@ export class ObSessionWatch extends ObSessionBase {
             this._boundHander = this.handleSetItemEvent.bind(this);
             window.addEventListener(session_storage_item_set, this._boundHander);
         }
+        if (this._key !== null) {
+            const val = sessionStorage.getItem(this._key);
+            if (val !== null)
+                this.value = val;
+        }
     }
     handleSetItemEvent(e) {
         const detail = e.detail;

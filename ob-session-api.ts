@@ -6,6 +6,7 @@ export interface ISessionStorageItemSetEventDetail {
 }
 
 const win = <any>window;
+export function init(){}
 if(!win.__obSessionCache){
     win.__obSessionCache = {};
 }
