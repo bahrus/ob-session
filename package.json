@@ -1,0 +1,19 @@
+{
+  "name": "ob-session",
+  "version": "0.0.0",
+  "description": "TBD",
+  "main": "ob-session.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bahrus/ob-session.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bahrus/ob-session/issues"
+  },
+  "homepage": "https://github.com/bahrus/ob-session#readme"
+}
