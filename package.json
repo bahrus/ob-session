@@ -1,6 +1,6 @@
 {
   "name": "ob-session",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "TBD",
   "main": "ob-session-api.js",
   "module": "ob-session-api.js",
