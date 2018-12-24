@@ -25,6 +25,7 @@ export class ObSessionBase extends XtallatX(HTMLElement) {
         this.attr(key, nv);
     }
     connectedCallback() {
+        this.style.display = 'none';
         this._upgradeProperties([disabled, key]);
         this._c = true;
         this.onPropsChange();

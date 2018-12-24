@@ -1,4 +1,5 @@
 export const session_storage_item_set = 'session-storage-item-set';
+export const session_storage_item_removed = 'session-storage-item-removed';
 export interface ISessionStorageItemSetEventDetail {
     key: string,
     oldValue: any,
@@ -54,6 +55,22 @@ window.sessionStorage.setItem = function(key: string, val: any){
         bubbles: true,
         composed: true,
     } as CustomEventInit);
+    window.dispatchEvent(newEvent);
+}
+
+const originalRemoveItem = window.sessionStorage.removeItem;
+const boundRemoveItem = originalRemoveItem.bind(window.sessionStorage);
+window.sessionStorage.removeItem = function(key: string){
+    const oldVal = sessionStorage.getItem(key);
+    boundRemoveItem(key);
+    delete win.__obSessionCache[key];
+    const newEvent = new CustomEvent(session_storage_item_removed, {
+        detail:{
+            key: key,
+            oldValue: oldVal,
+            newValue: null
+        }
+    });
     window.dispatchEvent(newEvent);
 }
 

@@ -1,4 +1,5 @@
 export const session_storage_item_set = 'session-storage-item-set';
+export const session_storage_item_removed = 'session-storage-item-removed';
 const win = window;
 export function init() { }
 if (!win.__obSessionCache) {
@@ -47,6 +48,21 @@ window.sessionStorage.setItem = function (key, val) {
         detail: detail,
         bubbles: true,
         composed: true,
+    });
+    window.dispatchEvent(newEvent);
+};
+const originalRemoveItem = window.sessionStorage.removeItem;
+const boundRemoveItem = originalRemoveItem.bind(window.sessionStorage);
+window.sessionStorage.removeItem = function (key) {
+    const oldVal = sessionStorage.getItem(key);
+    boundRemoveItem(key);
+    delete win.__obSessionCache[key];
+    const newEvent = new CustomEvent(session_storage_item_removed, {
+        detail: {
+            key: key,
+            oldValue: oldVal,
+            newValue: null
+        }
     });
     window.dispatchEvent(newEvent);
 };
