@@ -14,7 +14,7 @@ The ob-session package contains three refeences to make storing **ob**jects in *
 
 ## Why focus on Session Storage?
 
-Whereas one could argue that local storage is being eclipsed by helper libraries based on Indexed DB, session storage serves a particular niche -- In some lines of business, caching business data in the client, even after the browser closes, runs afoul of audits. history.state and sessionStorage don't appear to raise such concerns. 
+Whereas one could argue that local storage is being eclipsed by helper libraries based on Indexed DB, session storage serves a particular niche -- In some [lines of business](https://www.securityevaluators.com/casestudies/industry-wide-misunderstandings-of-https/), caching business data in the client, even after the browser closes, runs afoul of audits. history.state and sessionStorage don't appear to raise such concerns. 
 
 ## Install the Polymer-CLI
 

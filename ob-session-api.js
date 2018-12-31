@@ -51,6 +51,10 @@ window.sessionStorage.setItem = function (key, val) {
     });
     window.dispatchEvent(newEvent);
 };
+export function setJSONItem(key, val) {
+    win.__obSessionCache[key] = JSON.parse(val);
+    originalSetItem(key, val);
+}
 const originalRemoveItem = window.sessionStorage.removeItem;
 const boundRemoveItem = originalRemoveItem.bind(window.sessionStorage);
 window.sessionStorage.removeItem = function (key) {

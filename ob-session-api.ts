@@ -57,6 +57,10 @@ window.sessionStorage.setItem = function(key: string, val: any){
     } as CustomEventInit);
     window.dispatchEvent(newEvent);
 }
+export function setJSONItem(key: string, val: string){
+    win.__obSessionCache[key] = JSON.parse(val);
+    originalSetItem(key, val);
+}
 
 const originalRemoveItem = window.sessionStorage.removeItem;
 const boundRemoveItem = originalRemoveItem.bind(window.sessionStorage);
