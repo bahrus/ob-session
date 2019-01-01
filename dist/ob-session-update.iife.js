@@ -210,26 +210,30 @@ class ObSessionBase extends XtallatX(HTMLElement) {
     }
 }
 const value = 'value';
+const is_json = 'is-json';
 class ObSessionUpdate extends ObSessionBase {
     constructor() {
         super(...arguments);
         this._val = null;
+        this._isJSON = false;
     }
     static get is() { return 'ob-session-update'; }
     static get observedAttributes() {
-        return super.observedAttributes.concat([value]);
+        return super.observedAttributes.concat([value, is_json]);
     }
     attributeChangedCallback(n, ov, nv) {
         switch (n) {
             case value:
                 this._val = nv;
                 break;
+            case is_json:
+                this._isJSON = nv !== null;
         }
         super.attributeChangedCallback(n, ov, nv);
     }
     connectedCallback() {
         init();
-        this._upgradeProperties([value]);
+        this._upgradeProperties([value, 'isJSON']);
         super.connectedCallback();
     }
     get value() {
@@ -239,10 +243,21 @@ class ObSessionUpdate extends ObSessionBase {
         this._val = nv;
         this.onPropsChange();
     }
+    get isJSON() {
+        return this._isJSON;
+    }
+    set isJSON(nv) {
+        this.attr(is_json, nv, '');
+    }
     onPropsChange() {
         if (this._disabled || !this._c || this._key === null || this._val === null)
             return;
-        sessionStorage.setItem(this._key, this._val);
+        if (this._isJSON) {
+            setJSONItem(this._key, this._val);
+        }
+        else {
+            sessionStorage.setItem(this._key, this._val);
+        }
     }
 }
 define(ObSessionUpdate);
