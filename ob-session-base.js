@@ -1,4 +1,4 @@
-import { XtallatX, disabled } from 'xtal-latx/xtal-latx.js';
+import { XtallatX, disabled } from 'xtal-element/xtal-latx.js';
 const key = 'key';
 export class ObSessionBase extends XtallatX(HTMLElement) {
     constructor() {
@@ -31,4 +31,3 @@ export class ObSessionBase extends XtallatX(HTMLElement) {
         this.onPropsChange();
     }
 }
-//# sourceMappingURL=ob-session-base.js.map

@@ -60,4 +60,3 @@ export class ObSessionWatch extends ObSessionBase {
     }
 }
 define(ObSessionWatch);
-//# sourceMappingURL=ob-session-watch.js.map

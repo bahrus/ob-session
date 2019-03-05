@@ -1,5 +1,6 @@
 export const session_storage_item_set = 'session-storage-item-set';
 export const session_storage_item_removed = 'session-storage-item-removed';
+const cache = Symbol('cache');
 export interface ISessionStorageItemSetEventDetail {
     key: string,
     oldValue: any,
@@ -7,9 +8,9 @@ export interface ISessionStorageItemSetEventDetail {
 }
 
 const win = <any>window;
-export function init(){}
-if(!win.__obSessionCache){
-    win.__obSessionCache = {};
+//export function init(){}
+if(!win[cache]){
+    win[cache] = {};
 }
 
 
@@ -18,13 +19,13 @@ const boundGetItem = originalGetItem.bind(window.sessionStorage);
 window.sessionStorage.getItem = function (key: string) {
     const item = boundGetItem(key);
     if(item === null) return null;
-    const fromCache = win.__obSessionCache[key];
-    if(fromCache) return win.__obSessionCache;
+    const fromCache = win[cache][key];
+    if(fromCache) return win[cache];
     const firstChar = item[0];
     const lastChar = item[item.length - 1];
     if((firstChar === '[' && lastChar === ']') || (firstChar === '{' && lastChar === '}')){
-        win.__obSessionCache[key] = JSON.parse(item);
-        return win.__obSessionCache[key];
+        win[cache][key] = JSON.parse(item);
+        return win[cache][key];
     }else{
         return item;
     }
@@ -39,7 +40,7 @@ window.sessionStorage.setItem = function(key: string, val: any){
             boundSetItem(key, val);
             break;
         case 'object':
-            win.__obSessionCache[key] = val;
+            win[cache][key] = val;
             boundSetItem(key, JSON.stringify(val));
             break;
         default:
@@ -58,7 +59,7 @@ window.sessionStorage.setItem = function(key: string, val: any){
     window.dispatchEvent(newEvent);
 }
 export function setJSONItem(key: string, val: string){
-    win.__obSessionCache[key] = JSON.parse(val);
+    win[cache][key] = JSON.parse(val);
     originalSetItem(key, val);
 }
 
@@ -67,7 +68,7 @@ const boundRemoveItem = originalRemoveItem.bind(window.sessionStorage);
 window.sessionStorage.removeItem = function(key: string){
     const oldVal = sessionStorage.getItem(key);
     boundRemoveItem(key);
-    delete win.__obSessionCache[key];
+    delete win[cache][key];
     const newEvent = new CustomEvent(session_storage_item_removed, {
         detail:{
             key: key,

@@ -1,6 +1,6 @@
 import { ObSessionBase } from './ob-session-base.js';
-import { define } from 'xtal-latx/define.js';
-import { init, setJSONItem } from './ob-session-api.js';
+import { define } from 'xtal-element/define.js';
+import { setJSONItem } from './ob-session-api.js';
 const value = 'value';
 const is_json = 'is-json';
 export class ObSessionUpdate extends ObSessionBase {
@@ -24,7 +24,6 @@ export class ObSessionUpdate extends ObSessionBase {
         super.attributeChangedCallback(n, ov, nv);
     }
     connectedCallback() {
-        init();
         this._upgradeProperties([value, 'isJSON']);
         super.connectedCallback();
     }
@@ -53,4 +52,3 @@ export class ObSessionUpdate extends ObSessionBase {
     }
 }
 define(ObSessionUpdate);
-//# sourceMappingURL=ob-session-update.js.map

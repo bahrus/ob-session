@@ -1,4 +1,4 @@
-import { XtallatX, disabled } from 'xtal-latx/xtal-latx.js';
+import { XtallatX, disabled } from 'xtal-element/xtal-latx.js';
 
 const key = 'key';
 export abstract class ObSessionBase extends XtallatX(HTMLElement) {
