@@ -1,6 +1,7 @@
-import { XtallatX, disabled } from 'xtal-element/xtal-latx.js';
+import { XtallatX } from 'xtal-element/xtal-latx.js';
+import { disabled, hydrate } from 'trans-render/hydrate.js';
 const key = 'key';
-export class ObSessionBase extends XtallatX(HTMLElement) {
+export class ObSessionBase extends XtallatX(hydrate(HTMLElement)) {
     constructor() {
         super(...arguments);
         this._key = null;
@@ -26,7 +27,7 @@ export class ObSessionBase extends XtallatX(HTMLElement) {
     }
     connectedCallback() {
         this.style.display = 'none';
-        this._upgradeProperties([disabled, key]);
+        this.propUp([disabled, key]);
         this._c = true;
         this.onPropsChange();
     }

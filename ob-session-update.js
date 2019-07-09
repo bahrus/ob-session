@@ -1,5 +1,5 @@
 import { ObSessionBase } from './ob-session-base.js';
-import { define } from 'xtal-element/define.js';
+import { define } from 'trans-render/define.js';
 import { setJSONItem } from './ob-session-api.js';
 const value = 'value';
 const is_json = 'is-json';
@@ -24,7 +24,7 @@ export class ObSessionUpdate extends ObSessionBase {
         super.attributeChangedCallback(n, ov, nv);
     }
     connectedCallback() {
-        this._upgradeProperties([value, 'isJSON']);
+        this.propUp([value, 'isJSON']);
         super.connectedCallback();
     }
     get value() {

@@ -1,5 +1,5 @@
 import { ObSessionBase } from './ob-session-base.js';
-import { define } from 'xtal-latx/define.js';
+import { define } from 'trans-render/define.js';
 import { session_storage_item_set, session_storage_item_removed } from './ob-session-api.js';
 export class ObSessionWatch extends ObSessionBase {
     static get is() { return 'ob-session-watch'; }
