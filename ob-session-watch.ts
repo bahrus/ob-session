@@ -1,6 +1,7 @@
 import {define, XtallatX, AttributeProps} from 'xtal-element/xtal-latx.js';
 import {hydrate} from 'trans-render/hydrate.js';
-import {ISessionStorageItemSetEventDetail, session_storage_item_set, session_storage_item_removed} from './ob-session-api.js'
+import {session_storage_item_set, session_storage_item_removed} from './ob-session-api.js';
+import {ISessionStorageItemSetEventDetail} from './types.d.js';
 
 export const linkSessionStorage = ({disabled, connected, handleItemChangeEvent, self}: ObSessionWatch) => {
     if(disabled || !connected) return;
@@ -77,3 +78,9 @@ export class ObSessionWatch extends XtallatX(hydrate(HTMLElement)){
 }
 
 define(ObSessionWatch);
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'ob-session-watch': ObSessionWatch,
+    }
+}

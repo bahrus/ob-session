@@ -6,7 +6,8 @@
   "module": "ob-session-api.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "node node_modules/xtal-test/serve.js"
+    "serve": "node node_modules/xtal-test/serve.js",
+    "doc": "wca analyze ob-*.js --outFile custom-elements.json"
   },
   "dependencies": {
     "xtal-element": "0.0.286",

@@ -2,7 +2,6 @@ export const session_storage_item_set = 'session-storage-item-set';
 export const session_storage_item_removed = 'session-storage-item-removed';
 const cache = Symbol('cache');
 const initialized = Symbol('initialized');
-//const win = <any>window;
 const isLoaded = navigator.deviceMemory > 1;
 export function init(win = window) {
     const aWin = win;

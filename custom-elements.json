@@ -1,0 +1,56 @@
+{
+  "version": "experimental",
+  "tags": [
+    {
+      "name": "ob-session-update",
+      "path": "./ob-session-update.js",
+      "attributes": [
+        {
+          "name": "val",
+          "description": "Value to set",
+          "type": "Object"
+        },
+        {
+          "name": "key",
+          "description": "key where to store val in SessionStorage",
+          "type": "String"
+        },
+        {
+          "name": "disabled",
+          "description": "Any component that emits events should not do so if it is disabled.\r\nNote that this is not enforced, but the disabled property is made available.\r\nUsers of this mix-in should ensure not to call \"de\" if this property is set to true.",
+          "type": "boolean"
+        },
+        {
+          "name": "is-json",
+          "description": "Treat value as JSON",
+          "type": "Boolean"
+        }
+      ],
+      "properties": [
+        {
+          "name": "val",
+          "attribute": "val",
+          "description": "Value to set",
+          "type": "Object"
+        },
+        {
+          "name": "isJSON",
+          "description": "Treat value as JSON",
+          "type": "Boolean"
+        },
+        {
+          "name": "key",
+          "attribute": "key",
+          "description": "key where to store val in SessionStorage",
+          "type": "String"
+        },
+        {
+          "name": "disabled",
+          "attribute": "disabled",
+          "description": "Any component that emits events should not do so if it is disabled.\r\nNote that this is not enforced, but the disabled property is made available.\r\nUsers of this mix-in should ensure not to call \"de\" if this property is set to true.",
+          "type": "boolean"
+        }
+      ]
+    }
+  ]
+}
