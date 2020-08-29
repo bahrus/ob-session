@@ -1,6 +1,8 @@
 export const session_storage_item_set = 'session-storage-item-set';
 export const session_storage_item_removed = 'session-storage-item-removed';
 const cache = Symbol('cache');
+const initialized = Symbol('initialized');
+
 export interface ISessionStorageItemSetEventDetail {
     key: string,
     oldValue: any,
@@ -15,6 +17,8 @@ const isLoaded = (<any>navigator).deviceMemory > 1;
 
 export function init(win: Window = window){
     const aWin = win as any;
+    if(aWin[initialized]) return;
+    aWin[initialized] = true;
     if(!aWin[cache] && isLoaded){
         aWin[cache] = {};
     }

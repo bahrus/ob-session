@@ -28,7 +28,31 @@ Websites that appear to store objects in session storage:
 
 Whereas one could argue that local storage is being eclipsed by helper libraries based on Indexed DB, session storage serves a particular niche -- In some [lines of business](https://www.securityevaluators.com/casestudies/industry-wide-misunderstandings-of-https/), caching business data in the client, even after the browser window / tab closes, runs afoul of audits. history.state and sessionStorage don't appear to raise such concerns. 
 
-## 
+## API
+
+The api supports an init(win: Window) function, where you can pass in a window (say, from an iframe).  init() is immediately called on the window that references the api.
+
+Once init is called, just call setItem(key, stringOrJsonSerializableObject), getItem(key), removeItem(key) from the window object.
+
+To listen for any updates to sessionStorage, use:
+
+```JavaScript
+win.addEventListener('session-storage-item-set', e => {
+    console.log(e.detail.oldValue, e.detail.newValue, e.detail.key);
+});
+win.addEventListener('session-storage-item-removed', e => {
+    console.log(e.detail.oldValue, e.detail.key);
+});
+```
+
+where "win" is a local variable shortcut pointing to the (iframed) window object.
+
+## Syntax
+
+```html
+<ob-session-update key="myObj" val='{"greeting": "hello"}' is-json></ob-session-update>
+<ob-session-watch key="myObj" id=myWatcher></ob-session-watch>
+```
 
 
 ## Viewing Your Element
