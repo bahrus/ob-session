@@ -1,86 +1,83 @@
 export const session_storage_item_set = 'session-storage-item-set';
 export const session_storage_item_removed = 'session-storage-item-removed';
 const cache = Symbol('cache');
-const win = window;
-const isLoaded = navigator.deviceMemory > 2;
-//export function init(){}
-if (!win[cache] && isLoaded) {
-    win[cache] = {};
-}
-if (isLoaded) {
-    const originalGetItem = window.sessionStorage.getItem;
-    const boundGetItem = originalGetItem.bind(window.sessionStorage);
-    window.sessionStorage.getItem = function (key) {
-        const item = boundGetItem(key);
-        if (item === null)
-            return null;
-        if (!isLoaded)
-            return item;
-        const fromCache = win[cache][key];
-        if (fromCache)
-            return win[cache];
-        const firstChar = item[0];
-        const lastChar = item[item.length - 1];
-        if ((firstChar === '[' && lastChar === ']') || (firstChar === '{' && lastChar === '}')) {
-            win[cache][key] = JSON.parse(item);
-            return win[cache][key];
+//const win = <any>window;
+const isLoaded = navigator.deviceMemory > 1;
+export function init(win = window) {
+    const aWin = win;
+    if (!aWin[cache] && isLoaded) {
+        aWin[cache] = {};
+    }
+    if (isLoaded) {
+        const originalGetItem = win.sessionStorage.getItem;
+        const boundGetItem = originalGetItem.bind(win.sessionStorage);
+        win.sessionStorage.getItem = function (key) {
+            const item = boundGetItem(key);
+            if (item === null)
+                return null;
+            if (!isLoaded)
+                return item;
+            const fromCache = aWin[cache][key];
+            if (fromCache)
+                return aWin[cache];
+            const firstChar = item[0];
+            const lastChar = item[item.length - 1];
+            if ((firstChar === '[' && lastChar === ']') || (firstChar === '{' && lastChar === '}')) {
+                aWin[cache][key] = JSON.parse(item);
+                return aWin[cache][key];
+            }
+            else {
+                return item;
+            }
+        };
+    }
+    const originalSetItem = win.sessionStorage.setItem;
+    const boundSetItem = originalSetItem.bind(win.sessionStorage);
+    win.sessionStorage.setItem = function (key, val) {
+        const oldVal = sessionStorage.getItem(key);
+        if (!isLoaded) {
+            boundSetItem(key, val);
         }
         else {
-            return item;
+            switch (typeof val) {
+                case 'string':
+                    boundSetItem(key, val);
+                    break;
+                case 'object':
+                    aWin[cache][key] = val;
+                    boundSetItem(key, JSON.stringify(val));
+                    break;
+                default:
+                    throw "Not Implemented";
+            }
         }
-    };
-}
-const originalSetItem = window.sessionStorage.setItem;
-const boundSetItem = originalSetItem.bind(window.sessionStorage);
-window.sessionStorage.setItem = function (key, val) {
-    const oldVal = sessionStorage.getItem(key);
-    if (!isLoaded) {
-        boundSetItem(key, val);
-    }
-    else {
-        switch (typeof val) {
-            case 'string':
-                boundSetItem(key, val);
-                break;
-            case 'object':
-                win[cache][key] = val;
-                boundSetItem(key, JSON.stringify(val));
-                break;
-            default:
-                throw "Not Implemented";
-        }
-    }
-    const detail = {
-        key: key,
-        oldValue: oldVal,
-        newValue: val,
-    };
-    const newEvent = new CustomEvent(session_storage_item_set, {
-        detail: detail,
-        bubbles: true,
-        composed: true,
-    });
-    window.dispatchEvent(newEvent);
-};
-// export function setJSONItem(key: string, val: string | object){
-//     const jsonVal = typeof(val) === 'string' ? JSON.parse(val) : val;
-//     const sVal = typeof(val) === 'string' ? val : JSON.stringify(val);
-//     if(isLoaded) win[cache][key] = jsonVal;
-//     originalSetItem(key, sVal);
-// }
-const originalRemoveItem = window.sessionStorage.removeItem;
-const boundRemoveItem = originalRemoveItem.bind(window.sessionStorage);
-window.sessionStorage.removeItem = function (key) {
-    const oldVal = sessionStorage.getItem(key);
-    boundRemoveItem(key);
-    if (isLoaded)
-        delete win[cache][key];
-    const newEvent = new CustomEvent(session_storage_item_removed, {
-        detail: {
+        const detail = {
             key: key,
             oldValue: oldVal,
-            newValue: null
-        }
-    });
-    window.dispatchEvent(newEvent);
-};
+            newValue: val,
+        };
+        const newEvent = new CustomEvent(session_storage_item_set, {
+            detail: detail,
+            bubbles: true,
+            composed: true,
+        });
+        win.dispatchEvent(newEvent);
+    };
+    const originalRemoveItem = win.sessionStorage.removeItem;
+    const boundRemoveItem = originalRemoveItem.bind(win.sessionStorage);
+    win.sessionStorage.removeItem = function (key) {
+        const oldVal = sessionStorage.getItem(key);
+        boundRemoveItem(key);
+        if (isLoaded)
+            delete aWin[cache][key];
+        const newEvent = new CustomEvent(session_storage_item_removed, {
+            detail: {
+                key: key,
+                oldValue: oldVal,
+                newValue: null
+            }
+        });
+        win.dispatchEvent(newEvent);
+    };
+}
+init();

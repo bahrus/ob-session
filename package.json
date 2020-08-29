@@ -1,7 +1,7 @@
 {
   "name": "ob-session",
   "version": "0.0.5",
-  "description": "TBD",
+  "description": "Make storing **ob**jects in **Session**Storage easier and faster",
   "main": "ob-session-api.js",
   "module": "ob-session-api.js",
   "scripts": {
