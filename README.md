@@ -54,6 +54,7 @@ where "win" is a local variable shortcut pointing to the (iframed) window object
 <ob-session-watch key="myObj" id=myWatcher></ob-session-watch>
 ```
 
+[Api Reference](https://bahrus.github.io/api-viewer/index.html?npmPackage=ob-session&jsonPath=custom-elements.json)
 
 ## Viewing Your Element
 
