@@ -12,6 +12,16 @@ The ob-session package contains three references to make storing **ob**jects in 
 2.  A non-visual web component, "ob-session-watch", that watches for sessionStorage changes, and fires an event when such a thing happens.  It can watch for all changes, or to those with a specified key.
 3.  A non-visual web component, "ob-session-update", that updates sessionStorage declaratively.
 
+## In good company
+
+Websites that appear to store objects in session storage:
+
+1.  Twitter
+2.  Amazon.com
+3.  Walmart.com
+4.  CNN.com
+5.  WashingtonPost.com
+
 ## Why focus on Session Storage?
 
 Whereas one could argue that local storage is being eclipsed by helper libraries based on Indexed DB, session storage serves a particular niche -- In some [lines of business](https://www.securityevaluators.com/casestudies/industry-wide-misunderstandings-of-https/), caching business data in the client, even after the browser window / tab closes, runs afoul of audits. history.state and sessionStorage don't appear to raise such concerns. 
