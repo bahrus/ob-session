@@ -1,65 +1,76 @@
-import {ObSessionBase} from './ob-session-base.js';
-import {define} from 'trans-render/define.js';
+import {define, XtallatX, AttributeProps} from 'xtal-element/xtal-latx.js';
+import {hydrate} from 'trans-render/hydrate.js';
 import {ISessionStorageItemSetEventDetail, session_storage_item_set, session_storage_item_removed} from './ob-session-api.js'
 
-export class ObSessionWatch extends ObSessionBase{
-    _boundSetHandler!: any;
-    _boundRemoveHandler!: any;
-    static get is(){return 'ob-session-watch';}
-    
-    onPropsChange(){
-        if(this.disabled || !this._c) return;
-        if(!this._boundSetHandler){
-            this._boundSetHandler = this.handleItemChangeEvent.bind(this);
-            window.addEventListener(session_storage_item_set, this._boundSetHandler);
-        }
-        if(!this._boundRemoveHandler){
-            this._boundRemoveHandler = this.handleItemChangeEvent.bind(this);
-            window.addEventListener(session_storage_item_removed, this._boundRemoveHandler)
-        }
-        if(this._key !== null){
-            const val = sessionStorage.getItem(this._key);
-            if(val !== null) this.value = val;
-        } 
+export const linkSessionStorage = ({disabled, connected, handleItemChangeEvent, self}: ObSessionWatch) => {
+    if(disabled || !connected) return;
+    self.boundSetHandler = handleItemChangeEvent.bind(self);
+    window.addEventListener(session_storage_item_set, self.boundSetHandler);
+    const boundRemoveHandler = handleItemChangeEvent.bind(self);
+    window.addEventListener(session_storage_item_removed, self.boundRemoveHandler);
+    self.boundRemoveHandler = boundRemoveHandler;
+}
+
+export const unbindHandlers = ({disconnecting, self}: ObSessionWatch) => {
+    if(!disconnecting) return;
+    if(self.boundSetHandler) window.removeEventListener(session_storage_item_set, self.boundSetHandler);
+    if(self.boundRemoveHandler) window.removeEventListener(session_storage_item_removed, self.boundRemoveHandler);
+}
+
+export const linkValue = ({disabled, key, boundRemoveHandler, self}: ObSessionWatch) => {
+    if(key === undefined) return;
+    self.value = sessionStorage.getItem(key);
+}
+
+export const linkValueFromSessionChangeEvent = ({disabled, lastEventDetail, key, self}: ObSessionWatch) => {
+    if(lastEventDetail === undefined) return;
+    if(key === undefined){
+        self.value = lastEventDetail;
+        return;
     }
+    if(key === lastEventDetail.key){
+        self.value = lastEventDetail.newValue
+    }
+}
+
+export const propActions = [linkSessionStorage, unbindHandlers, linkValue, linkValueFromSessionChangeEvent];
+
+export class ObSessionWatch extends XtallatX(hydrate(HTMLElement)){
+    static is = 'ob-session-watch';
+    static attributeProps = ({disabled, key, disconnecting, connected, boundRemoveHandler, value, lastEventDetail}: ObSessionWatch) => ({
+        bool: [disabled, disconnecting, connected],
+        dry: [value],
+        str: [key],
+        obj: [value, boundRemoveHandler, lastEventDetail],
+        notify: [value],
+    } as AttributeProps);
+
+    key: string | undefined;
+    connected: boolean | undefined;
+    disconnecting: boolean | undefined;
+
+    boundSetHandler!: any;
+    boundRemoveHandler!: any;
+
+    lastEventDetail: ISessionStorageItemSetEventDetail | undefined;
+
+    
+    propActions = propActions;
+
+    value: any;
+
 
     handleItemChangeEvent(e: Event){
-        const detail = (<any>e).detail as ISessionStorageItemSetEventDetail;
-        if(this._key === null){
-            this.value = detail;
-        }else if(this._key === detail.key){
-            this.value = detail.newValue;
-        }
+        this.lastEventDetail = (<any>e).detail as ISessionStorageItemSetEventDetail;
     }
 
-    // handleRemoveItemEvent(e: Event){
-    //     const detail = (<any>e).detail as ISessionStorageItemSetEventDetail;
-    //     if(this._key === null){
-    //         this.value = detail;
-    //     }else if(this._key === detail.key){
-    //         this.value = detail.newValue;
-    //     }
-    // }
+    connectedCallback(){
+        this.style.display = 'none';
+        super.connectedCallback();
+        this.connected = true;
+    }
     disconnectedCallback(){
-        if(this._boundSetHandler) window.removeEventListener(session_storage_item_set, this._boundSetHandler);
-        if(this._boundRemoveHandler) window.removeEventListener(session_storage_item_removed, this._boundRemoveHandler);
-    }
-
-    _value: any;
-    get value(){
-        return this._value;
-    }
-    set value(nv: any){
-        const ov = this._value;
-        const detail = this._key === null ? {
-            value: nv.newValue,
-            key: nv.key,
-        } : {
-            value: nv,
-            key: this._key
-        }
-        this._value = detail;
-        this.de('value', detail);
+        this.disconnecting = true;
     }
 
     

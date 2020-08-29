@@ -20,6 +20,7 @@ if(isLoaded){
     window.sessionStorage.getItem = function (key: string) {
         const item = boundGetItem(key);
         if(item === null) return null;
+        if(!isLoaded) return item;
         const fromCache = win[cache][key];
         if(fromCache) return win[cache];
         const firstChar = item[0];
@@ -66,10 +67,12 @@ window.sessionStorage.setItem = function(key: string, val: any){
     } as CustomEventInit);
     window.dispatchEvent(newEvent);
 }
-export function setJSONItem(key: string, val: string){
-    if(isLoaded) win[cache][key] = JSON.parse(val);
-    originalSetItem(key, val);
-}
+// export function setJSONItem(key: string, val: string | object){
+//     const jsonVal = typeof(val) === 'string' ? JSON.parse(val) : val;
+//     const sVal = typeof(val) === 'string' ? val : JSON.stringify(val);
+//     if(isLoaded) win[cache][key] = jsonVal;
+//     originalSetItem(key, sVal);
+// }
 
 const originalRemoveItem = window.sessionStorage.removeItem;
 const boundRemoveItem = originalRemoveItem.bind(window.sessionStorage);

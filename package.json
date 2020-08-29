@@ -9,15 +9,14 @@
     "serve": "node node_modules/xtal-test/serve.js"
   },
   "dependencies": {
-    "xtal-element": "0.0.101",
-    "trans-render": "0.0.143"
+    "xtal-element": "0.0.286",
+    "trans-render": "0.0.255"
   },
   "devDependencies": {
-    "@webcomponents/webcomponentsjs": "2.4.3",
-    "xtal-test": "0.0.44",
-    "p-et-alia": "0.0.74",
-    "xtal-state": "0.0.100",
-    "es-module-shims": "0.4.6"
+    "xtal-test": "0.0.46",
+    "p-et-alia": "0.0.114",
+    "xtal-state": "0.0.113",
+    "es-module-shims": "0.5.2"
   },
   "repository": {
     "type": "git",

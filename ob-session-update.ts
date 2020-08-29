@@ -1,56 +1,36 @@
-import {ObSessionBase} from './ob-session-base.js';
-import {define} from 'trans-render/define.js';
-import {setJSONItem} from './ob-session-api.js';
+import {define, XtallatX, AttributeProps} from 'xtal-element/xtal-latx.js';
+import {hydrate} from 'trans-render/hydrate.js';
+//import {setJSONItem} from './ob-session-api.js';
+import './ob-session-api.js';
 
-const value = 'value';
-const is_json = 'is-json';
+export const updateSessionStorage = ({key, isJson, val, disabled}: ObSessionUpdate) => {
+    if(disabled || key===undefined || val === undefined) return;
+    sessionStorage.setItem(key, val);
+};
+export const propActions = [updateSessionStorage];
 
-export class ObSessionUpdate extends ObSessionBase{
-    static get is(){return 'ob-session-update';}
-    static get observedAttributes(){
-        return super.observedAttributes.concat([value, is_json]);
-    }
-    attributeChangedCallback(n: string, ov: string, nv: string){
-        switch(n){
-            case value:
-                this._val = nv;
-                break;
-            case is_json:
-                this._isJSON = nv !== null;
-        }
-        super.attributeChangedCallback(n, ov, nv);
-    }
-    connectedCallback(){
-        this.propUp([value, 'isJSON']);
-        super.connectedCallback();
-    }
+export class ObSessionUpdate extends XtallatX(hydrate(HTMLElement)){
+    static is = 'ob-session-update';
+
+    static attributeProps = ({disabled, val, isJson, key} : ObSessionUpdate) => ({
+        bool: [disabled, isJson],
+        obj: [val],
+        jsonProp: [val],
+        str: [key]
+    }  as AttributeProps);
+ 
+
+    val: any;
     
-    _val: any = null;
-    get value(){
-        return this._val;
-    }
-    set value(nv){
-        this._val = nv;
-        this.onPropsChange();
-    }
+    isJson: boolean | undefined;
 
-    _isJSON = false;
-    get isJSON(){
-        return this._isJSON;
-    }
-    set isJSON(nv){
-        this.attr(is_json, nv, '');
-    }
+    key: string | undefined;
 
+    propActions = propActions;
 
-    onPropsChange(){
-        if(this._disabled || !this._c ||  this._key === null || this._val === null) return;
-        if(this._isJSON){
-            setJSONItem(this._key, this._val);
-        }else{
-            sessionStorage.setItem(this._key, this._val);
-        }
-        
+    connectedCallback(){
+        this.style.display = 'none';
+        super.connectedCallback();
     }
 }
 define(ObSessionUpdate);

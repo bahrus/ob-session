@@ -8,7 +8,7 @@ File size of all components combined <img src="http://img.badgesize.io/https://u
 
 The ob-session package contains three references to make storing **ob**jects in **Session**Storage easier and faster:
 
-1.  A small "api" that enhances the sessionStorage.setItem, sessionStorage.getItem and sessionStorage.removeItem calls to support storing **objects**, not just strings, in a performant way.  Objects are stored in a global cache for rapid retrieval, but a stringified version is stored in sessionStorage for when the page is refreshed.  This is not done on low memory devices however.  It is only done if can confirm that the device has > 2 Gig RAM.
+1.  A small "api" that enhances the sessionStorage.setItem, sessionStorage.getItem and sessionStorage.removeItem calls to support storing **objects**, not just strings, in a performant way.  Objects are stored in a global cache for rapid retrieval, but a stringified version is stored in sessionStorage for when the page is refreshed.  This is not done on low memory devices however.  It is only done if the code can confirm that the device has > 2 Gig RAM.
 2.  A non-visual web component, "ob-session-watch", that watches for sessionStorage changes, and fires an event when such a thing happens.  It can watch for all changes, or to those with a specified key.
 3.  A non-visual web component, "ob-session-update", that updates sessionStorage declaratively.
 
