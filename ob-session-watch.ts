@@ -36,6 +36,15 @@ export const linkValueFromSessionChangeEvent = ({disabled, lastEventDetail, key,
 
 export const propActions = [linkSessionStorage, unbindHandlers, linkValue, linkValueFromSessionChangeEvent];
 
+/**
+ * @element ob-session-watch
+ * @prop {String} key - key to observe from SessionStorage
+ * @prop {Object} lastEventDetail -- last item change event 
+ * @prop {Object} value - value of key in SessionStorage or LastEventDetail
+ * 
+ * @attr {String} key - key to observe from SessionStorage
+ * 
+ */
 export class ObSessionWatch extends XtallatX(hydrate(HTMLElement)){
     static is = 'ob-session-watch';
     static attributeProps = ({disabled, key, disconnecting, connected, boundRemoveHandler, value, lastEventDetail}: ObSessionWatch) => ({

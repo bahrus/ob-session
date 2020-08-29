@@ -51,6 +51,46 @@
           "type": "boolean"
         }
       ]
+    },
+    {
+      "name": "ob-session-watch",
+      "path": "./ob-session-watch.js",
+      "attributes": [
+        {
+          "name": "key",
+          "description": "key to observe from SessionStorage",
+          "type": "String"
+        },
+        {
+          "name": "disabled",
+          "description": "Any component that emits events should not do so if it is disabled.\r\nNote that this is not enforced, but the disabled property is made available.\r\nUsers of this mix-in should ensure not to call \"de\" if this property is set to true.",
+          "type": "boolean"
+        }
+      ],
+      "properties": [
+        {
+          "name": "key",
+          "attribute": "key",
+          "description": "key to observe from SessionStorage",
+          "type": "String"
+        },
+        {
+          "name": "lastEventDetail",
+          "description": "- last item change event",
+          "type": "Object"
+        },
+        {
+          "name": "value",
+          "description": "value of key in SessionStorage or LastEventDetail",
+          "type": "Object"
+        },
+        {
+          "name": "disabled",
+          "attribute": "disabled",
+          "description": "Any component that emits events should not do so if it is disabled.\r\nNote that this is not enforced, but the disabled property is made available.\r\nUsers of this mix-in should ensure not to call \"de\" if this property is set to true.",
+          "type": "boolean"
+        }
+      ]
     }
   ]
 }
