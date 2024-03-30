@@ -1,0 +1,31 @@
+{
+  "name": "ob-session",
+  "version": "0.0.6",
+  "description": "Make storing **ob**jects in **Session**Storage easier and faster",
+  "main": "ob-session-api.js",
+  "module": "ob-session-api.js",
+  "dependencies": {
+    "xtal-element": "0.0.602",
+    "trans-render": "0.0.756"
+  },
+  "devDependencies": {
+    "may-it-serve": "0.0.6",
+    "may-it-be": "0.0.171"
+  },
+  "scripts": {
+    "test": "playwright test",
+    "serve": "node node_modules/may-it-serve/serve.js",
+    "safari": "npx playwright wk http://localhost:3030",
+    "update": "ncu -u && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bahrus/ob-session.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bahrus/ob-session/issues"
+  },
+  "homepage": "https://github.com/bahrus/ob-session#readme"
+}
