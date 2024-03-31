@@ -69,6 +69,12 @@ export class ObSession extends HTMLElement implements Actions{
             parsedVal: val === null ? null :  (typeof val === 'object') ? val : JSON.parse(val),
         } as {value: string | null, parsedVal: null | JSONObject};
     }
+
+    onSetItem(self: this): PP {
+        const {setItem, key} = self;
+        sessionStorage.setItem(key!, setItem as any as string);
+        return {}
+    }
 }
 
 export interface ObSession extends AllProps{}
@@ -80,6 +86,7 @@ const xe = new XE<AllProps & HTMLElement, Actions>({
             key: {
                 type: 'String'
             },
+            
             // value: {
             //     type: 'String',
             //     notify: {
@@ -99,6 +106,9 @@ const xe = new XE<AllProps & HTMLElement, Actions>({
         actions:{
             hydrate: {
                 ifAllOf: ['isAttrParsed', 'key']
+            },
+            onSetItem: {
+                ifAllOf: ['isAttrParsed', 'key', 'setItem']
             }
         }
     }

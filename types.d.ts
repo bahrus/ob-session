@@ -2,7 +2,8 @@ import {ActionOnEventConfigs} from 'trans-render/froop/types';
 import { JSONObject } from 'trans-render/lib/types';
 
 export interface EndUserProps{
-    key: string
+    key: string,
+    setItem: JSONObject
 }
 
 export interface AllProps extends EndUserProps{
@@ -20,6 +21,7 @@ export type PPE = [PP, ActionOnEventConfigs<AllProps, Actions>];
 export interface Actions{
     hydrate(self: this): PP,
     getVals(self: this): PP,
+    onSetItem(self: this): PP,
 }
 
 export type session_storage_item_removed = 'session-storage-item-removed';
