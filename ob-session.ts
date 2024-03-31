@@ -23,8 +23,9 @@ export class ObSession extends HTMLElement implements Actions{
             const {key} = e;
             if(key === self.key){
                 const newVals = this.getVals(self);
-                self.#value = newVals.value;
-
+                const {value, parsedVal} = newVals;
+                self.#value = value;
+                self.#parsedVal = parsedVal;
             }
         }, {signal: this.#itemSetAC.signal});
         window.addEventListener<session_storage_item_removed>(SessionStorageItemRemovedEvent.EventName, e => {
@@ -33,14 +34,22 @@ export class ObSession extends HTMLElement implements Actions{
                 self.#value = '';
                 self.#parsedVal = null;
             }
+            self.dispatchEvent(new Event('change'));
         });
-        return this.getVals(self);
-        
+        const vals = this.getVals(self);
+        const {value, parsedVal} = vals;
+        self.#value = value;
+        self.#parsedVal = parsedVal;
+        self.dispatchEvent(new Event('change'));
+        return {}
     }
 
     disconnect(){
         if(this.#itemSetAC !== undefined) this.#itemSetAC.abort();
         if(this.#itemRemoveAC !== undefined) this.#itemRemoveAC.abort();
+    }
+    disconnectedCallback(){
+        this.disconnect();
     }
     #value: string | null = null;
     get value(){
