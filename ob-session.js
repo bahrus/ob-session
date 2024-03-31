@@ -13,7 +13,9 @@ export class ObSession extends HTMLElement {
             const { key } = e;
             if (key === self.key) {
                 const newVals = this.getVals(self);
-                self.#value = newVals.value;
+                const { value, parsedVal } = newVals;
+                self.#value = value;
+                self.#parsedVal = parsedVal;
             }
         }, { signal: this.#itemSetAC.signal });
         window.addEventListener(SessionStorageItemRemovedEvent.EventName, e => {
@@ -22,14 +24,23 @@ export class ObSession extends HTMLElement {
                 self.#value = '';
                 self.#parsedVal = null;
             }
+            self.dispatchEvent(new Event('change'));
         });
-        return this.getVals(self);
+        const vals = this.getVals(self);
+        const { value, parsedVal } = vals;
+        self.#value = value;
+        self.#parsedVal = parsedVal;
+        self.dispatchEvent(new Event('change'));
+        return {};
     }
     disconnect() {
         if (this.#itemSetAC !== undefined)
             this.#itemSetAC.abort();
         if (this.#itemRemoveAC !== undefined)
             this.#itemRemoveAC.abort();
+    }
+    disconnectedCallback() {
+        this.disconnect();
     }
     #value = null;
     get value() {
@@ -46,6 +57,11 @@ export class ObSession extends HTMLElement {
             value: (val !== null && typeof val === 'object') ? JSON.stringify(val) : val,
             parsedVal: val === null ? null : (typeof val === 'object') ? val : JSON.parse(val),
         };
+    }
+    onSetItem(self) {
+        const { setItem, key } = self;
+        sessionStorage.setItem(key, setItem);
+        return {};
     }
 }
 const xe = new XE({
@@ -74,6 +90,9 @@ const xe = new XE({
         actions: {
             hydrate: {
                 ifAllOf: ['isAttrParsed', 'key']
+            },
+            onSetItem: {
+                ifAllOf: ['isAttrParsed', 'key', 'setItem']
             }
         }
     }
