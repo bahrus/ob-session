@@ -1,7 +1,7 @@
 import {
     Actions, AllProps, ProPP, PP, PPE, session_storage_item_removed
 } from './types';
-import {init, SessionStorageItemRemovedEvent, SessionStorageItemSetEvent} from 'ob-session-api.js';
+import {init, SessionStorageItemRemovedEvent, SessionStorageItemSetEvent} from './ob-session-api.js';
 
 import {XE, ActionOnEventConfigs} from 'xtal-element/XE.js';
 
@@ -43,7 +43,12 @@ export class ObSession extends HTMLElement implements Actions{
         self.dispatchEvent(new Event('change'));
         return {}
     }
-
+    onNoKey(self: this): PP{
+        const {key, localName} = self;
+        return {
+            key: localName
+        }
+    }
     disconnect(){
         if(this.#itemSetAC !== undefined) this.#itemSetAC.abort();
         if(this.#itemRemoveAC !== undefined) this.#itemRemoveAC.abort();
@@ -87,23 +92,13 @@ const xe = new XE<AllProps & HTMLElement, Actions>({
                 type: 'String'
             },
             
-            // value: {
-            //     type: 'String',
-            //     notify: {
-            //         dispatch: true,
-            //     },
-            //     parse: false,
-            // },
-            // parsedVal: {
-            //     type: 'Object',
-            //     notify: {
-            //         dispatch: true,
-            //     },
-            //     parse: false,
-            // }
         },
         formAss: true,
         actions:{
+            onNoKey: {
+                ifAllOf: ['isAttrParsed'],
+                ifNoneOf: ['key'],
+            },
             hydrate: {
                 ifAllOf: ['isAttrParsed', 'key']
             },
@@ -111,7 +106,8 @@ const xe = new XE<AllProps & HTMLElement, Actions>({
                 ifAllOf: ['isAttrParsed', 'key', 'setItem']
             }
         }
-    }
+    },
+    superclass: ObSession
 })
 
 

@@ -19,6 +19,7 @@ export type ProPP = Promise<PP>
 export type PPE = [PP, ActionOnEventConfigs<AllProps, Actions>];
 
 export interface Actions{
+    onNoKey(self: this): PP,
     hydrate(self: this): PP,
     getVals(self: this): PP,
     onSetItem(self: this): PP,

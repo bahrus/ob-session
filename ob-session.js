@@ -1,4 +1,4 @@
-import { init, SessionStorageItemRemovedEvent, SessionStorageItemSetEvent } from 'ob-session-api.js';
+import { init, SessionStorageItemRemovedEvent, SessionStorageItemSetEvent } from './ob-session-api.js';
 import { XE } from 'xtal-element/XE.js';
 init();
 export class ObSession extends HTMLElement {
@@ -32,6 +32,12 @@ export class ObSession extends HTMLElement {
         self.#parsedVal = parsedVal;
         self.dispatchEvent(new Event('change'));
         return {};
+    }
+    onNoKey(self) {
+        const { key, localName } = self;
+        return {
+            key: localName
+        };
     }
     disconnect() {
         if (this.#itemSetAC !== undefined)
@@ -71,23 +77,13 @@ const xe = new XE({
             key: {
                 type: 'String'
             },
-            // value: {
-            //     type: 'String',
-            //     notify: {
-            //         dispatch: true,
-            //     },
-            //     parse: false,
-            // },
-            // parsedVal: {
-            //     type: 'Object',
-            //     notify: {
-            //         dispatch: true,
-            //     },
-            //     parse: false,
-            // }
         },
         formAss: true,
         actions: {
+            onNoKey: {
+                ifAllOf: ['isAttrParsed'],
+                ifNoneOf: ['key'],
+            },
             hydrate: {
                 ifAllOf: ['isAttrParsed', 'key']
             },
@@ -95,5 +91,6 @@ const xe = new XE({
                 ifAllOf: ['isAttrParsed', 'key', 'setItem']
             }
         }
-    }
+    },
+    superclass: ObSession
 });

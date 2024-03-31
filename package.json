@@ -10,7 +10,8 @@
   },
   "devDependencies": {
     "may-it-serve": "0.0.6",
-    "may-it-be": "0.0.171"
+    "may-it-be": "0.0.171",
+    "@power-elements/json-viewer": "2.1.1"
   },
   "scripts": {
     "test": "playwright test",
