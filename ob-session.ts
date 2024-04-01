@@ -43,11 +43,22 @@ export class ObSession extends HTMLElement implements Actions{
         self.dispatchEvent(new Event('change'));
         return {}
     }
-    onNoKey(self: this): PP{
-        const {key, localName} = self;
-        return {
-            key: localName
+    async onNoKey(self: this): ProPP{
+        const {localName, keyFormat} = self;
+        switch(keyFormat){
+            case 'as-is':
+                return {
+                    key: localName
+                } as PP
+            default:
+                const {lispToCamel} = await import('trans-render/lib/lispToCamel.js'); 
+                let key = lispToCamel(localName);
+                if(keyFormat === 'CamelCase') key = key[0].toUpperCase() + key.substring(1);
+                return {
+                    key
+                }  as PP;
         }
+
     }
     disconnect(){
         if(this.#itemSetAC !== undefined) this.#itemSetAC.abort();
@@ -87,6 +98,9 @@ export interface ObSession extends AllProps{}
 const xe = new XE<AllProps & HTMLElement, Actions>({
     config: {
         tagName: 'ob-session',
+        propDefaults:{
+            keyFormat: 'as-is',
+        },
         propInfo: {
             key: {
                 type: 'String'

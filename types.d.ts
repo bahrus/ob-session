@@ -3,7 +3,8 @@ import { JSONObject } from 'trans-render/lib/types';
 
 export interface EndUserProps{
     key: string,
-    setItem: JSONObject
+    setItem: JSONObject,
+    keyFormat: 'as-is' | 'camelCase' | 'CamelCase'
 }
 
 export interface AllProps extends EndUserProps{
@@ -19,7 +20,7 @@ export type ProPP = Promise<PP>
 export type PPE = [PP, ActionOnEventConfigs<AllProps, Actions>];
 
 export interface Actions{
-    onNoKey(self: this): PP,
+    onNoKey(self: this): ProPP,
     hydrate(self: this): PP,
     getVals(self: this): PP,
     onSetItem(self: this): PP,
