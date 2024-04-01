@@ -1,6 +1,6 @@
 {
   "name": "ob-session",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Make storing **ob**jects in **Session**Storage easier and faster",
   "main": "ob-session-api.js",
   "module": "ob-session-api.js",
