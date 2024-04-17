@@ -13,28 +13,33 @@
           "members": [
             {
               "kind": "field",
-              "name": "key"
+              "name": "key",
+              "description": "Specify what key to use in session storage"
             },
             {
               "kind": "field",
-              "name": "setItem"
+              "name": "setItem",
+              "description": "set the value of session storage for the given or inferred key."
             },
             {
               "kind": "field",
               "name": "keyFormat",
               "default": "as-is",
-              "description": "undefined\n            Possible values:\n\n            \n            CamelCase\n            \n            as-is\n            \n            camelCase\n            \n\n            "
+              "description": "If no key is set, will take the key from the localName of the custom element.\nThis parameter specifies if that localName should be formatted according to some common rules.\n            Possible values:\n\n            \n            CamelCase\n            \n            as-is\n            \n            camelCase\n            \n\n            "
             }
           ],
           "attributes": [
             {
-              "name": "key"
+              "name": "key",
+              "description": "Specify what key to use in session storage"
             },
             {
-              "name": "set-item"
+              "name": "set-item",
+              "description": "set the value of session storage for the given or inferred key."
             },
             {
-              "name": "key-format"
+              "name": "key-format",
+              "description": "If no key is set, will take the key from the localName of the custom element.\nThis parameter specifies if that localName should be formatted according to some common rules."
             }
           ]
         }
