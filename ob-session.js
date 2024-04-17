@@ -33,11 +33,22 @@ export class ObSession extends HTMLElement {
         self.dispatchEvent(new Event('change'));
         return {};
     }
-    onNoKey(self) {
-        const { key, localName } = self;
-        return {
-            key: localName
-        };
+    async onNoKey(self) {
+        const { localName, keyFormat } = self;
+        switch (keyFormat) {
+            case 'as-is':
+                return {
+                    key: localName
+                };
+            default:
+                const { lispToCamel } = await import('trans-render/lib/lispToCamel.js');
+                let key = lispToCamel(localName);
+                if (keyFormat === 'CamelCase')
+                    key = key[0].toUpperCase() + key.substring(1);
+                return {
+                    key
+                };
+        }
     }
     disconnect() {
         if (this.#itemSetAC !== undefined)
@@ -73,6 +84,9 @@ export class ObSession extends HTMLElement {
 const xe = new XE({
     config: {
         tagName: 'ob-session',
+        propDefaults: {
+            keyFormat: 'as-is',
+        },
         propInfo: {
             key: {
                 type: 'String'

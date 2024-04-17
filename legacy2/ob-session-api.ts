@@ -1,4 +1,4 @@
-import {ISessionStorageItemSetEventDetail} from './types.d.js';
+import {ISessionStorageItemSetEventDetail} from './types.js';
 export const session_storage_item_set = 'session-storage-item-set';
 export const session_storage_item_removed = 'session-storage-item-removed';
 const cache = Symbol('cache');
