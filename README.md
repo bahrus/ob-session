@@ -6,13 +6,15 @@
 <img src="http://img.badgesize.io/https://cdn.jsdelivr.net/npm/ob-session?compression=gzip">
 [![Playwright Tests](https://github.com/bahrus/ob-session/actions/workflows/CI.yml/badge.svg?branch=baseline)](https://github.com/bahrus/ob-session/actions/workflows/CI.yml)
 
-ob-session is a web component that makes accessing SessionStorage declarative, and adds support for JSON objects.  It can act as a "web component as a serivce" within a "web component organism".
+ob-session is a web component that makes accessing SessionStorage declarative, and adds support for JSON objects.  It can act as a "web component as a service" within a "web component organism".
 
 It can also serve as a base class that can be given a semantic name on the fly, with the help of [be-obsessed](https://github.com/bahrus-be-obsessed), that is actually used as the key for where to find the object:
 
 ```html
-<user-preferences be-obsessed></user-preferences>
+<user-preferences be-obsessed onchange></user-preferences>
 ```
+
+Because we are allowing pure HTML markup to do things that could have potentially nasty side effects, just in case, this component insists that the onchange attribute be present, in order to do anything.  The choice of onchange isn't arbitrary.  The component actually emits event "change" when the key it is monitoring for changes in value in sessionStorage.  So we can in fact add code in the onchange event that does something when that happens.
 
 ## In good company
 

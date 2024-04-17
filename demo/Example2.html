@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type=importmap>
+        {
+            "imports": {
+                "@power-elements/": "/node_modules/@power-elements/",
+                "trans-render/": "/node_modules/trans-render/"
+            }
+        }
+    </script>
+    <script type=module>
+        import '/index.js';
+        import '@power-elements/json-viewer/json-viewer.js';
+    </script>
+</head>
+<body>
+    <ob-session key=hello onchange></ob-session>
+</body>
+</html>

@@ -47,12 +47,13 @@ export class ObSession extends O<AllProps, Actions> implements Actions {
         actions: {
             onNoKey:{
                 ifNoneOf: ['key'],
+                ifAllOf: ['onchange']
             },
             hydrate: {
-                ifAllOf: ['key']
+                ifAllOf: ['key', 'onchange']
             },
             onSetItem:{
-                ifKeyIn: ['setItem']
+                ifAllOf: ['key', 'onchange', 'setItem']
             }
         },
         handlers: {
