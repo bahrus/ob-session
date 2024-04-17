@@ -53,15 +53,38 @@ where "win" is a local variable shortcut pointing to the (iframed) window object
 
 Custom element [properties/attributes reference](https://cf-sw.bahrus.workers.dev/?href=https%3A%2F%2Fcdn.jsdelivr.net%2Fnpm%2Fob-session%400.0.10%2Fcustom-elements.json&stylesheet=https%3A%2F%2Fcdn.jsdelivr.net%2Fnpm%2Fwc-info%2Fsimple-ce-style.css&embedded=false&tags=&ts=2024-04-17T21%3A24%3A36.667Z&tocXSLT=https%3A%2F%2Fcdn.jsdelivr.net%2Fnpm%2Fwc-info%2Ftoc.xsl)
 
-## Viewing Your Element
+## Viewing Demos Locally
+
+Any web server that can serve static files will do, but...
+
+1.  Install git.
+2.  Fork/clone this repo.
+3.  Install node.js.
+4.  Open command window to folder where you cloned this repo.
+5.  > npm install
+6.  > npm run serve
+7.  Open http://localhost:3030/demo/ in a modern browser.
+
+<!--## Running Tests
 
 ```
-$ npm install
-$ npm run serve
+> npm run test
+```
+-->
+## Using from ESM Module:
+
+```JavaScript
+import 'ob-session/ob-session.js';
 ```
 
-## Running Tests
+## Using from CDN:
 
-WIP
+```html
+<script type=module crossorigin=anonymous>
+    import 'https://esm.run/ob-session';
+</script>
+```
+
+
 
 
