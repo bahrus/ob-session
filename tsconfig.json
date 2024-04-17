@@ -8,7 +8,7 @@
 		"strict": true,
 	},
 	"files":[
-		"ob-session.ts"
+		"index.ts"
 	],
 	"exclude":[
 		"node_modules"

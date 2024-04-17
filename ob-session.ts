@@ -121,6 +121,4 @@ export class ObSession extends O<AllProps, Actions> implements Actions {
     }
 }
 
-export interface ObSession extends AllProps{
-
-}
+export interface ObSession extends AllProps{}
