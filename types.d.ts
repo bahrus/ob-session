@@ -2,8 +2,18 @@ import {ActionOnEventConfigs} from 'trans-render/froop/types';
 import { JSONObject } from 'trans-render/lib/types';
 
 export interface EndUserProps{
+    /**
+     * Specify what key to use in session storage
+     */
     key: string,
+    /**
+     * set the value of session storage for the given or inferred key.
+     */
     setItem: JSONObject,
+    /**
+     * If no key is set, will take the key from the localName of the custom element.
+     * This parameter specifies if that localName should be formatted according to some common rules.
+     */
     keyFormat: 'as-is' | 'camelCase' | 'CamelCase',
     
 }
