@@ -8,6 +8,7 @@ import {
 } from './types.js';
 import { JSONObject } from 'trans-render/lib/types.js';
 import {init, SessionStorageItemRemovedEvent, SessionStorageItemSetEvent} from './ob-session-api.js';
+import {dispatchEvent} from 'trans-render/positractions/dispatchEvent.js';
 
 init();
 
@@ -48,8 +49,19 @@ export class ObSession extends O<AllProps, Actions> implements Actions {
         handlers: {
             window_to_onItemSet_on: SessionStorageItemSetEvent.EventName,
             window_to_onItemRemove_on: SessionStorageItemRemovedEvent.EventName,
-        }
+        },
+        positractions: [
+            {
+                do: 'de',
+                ifKeyIn: ['parsedVal'],
+                pass: ['$0', '`change`']
+            }
+
+
+        ]
     }
+
+    de = dispatchEvent;
 
     async onNoKey(self: this): ProPP{
         const {localName, keyFormat} = self;

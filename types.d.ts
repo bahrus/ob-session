@@ -31,6 +31,15 @@ export interface Actions{
     //onSetItem(self: this): PP,
     onItemSet(self: this, e: SessionStorageEvent): PP,
     onItemRemove(self: this, e: SessionStorageEvent): PP,
+
+    /**
+     * dispatch event from passed in event target
+     * @param src 
+     * @param name 
+     * @returns 
+     */
+    de: (src: EventTarget, name: string) => Event;
+
 }
 
 export type session_storage_item_removed = 'session-storage-item-removed';
