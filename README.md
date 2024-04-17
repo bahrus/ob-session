@@ -51,11 +51,7 @@ win.addEventListener('session-storage-item-removed', e => {
 
 where "win" is a local variable shortcut pointing to the (iframed) window object.
 
-<!--
-
-[Api Reference](https://bahrus.github.io/api-viewer/index.html?npmPackage=ob-session&jsonPath=custom-elements.json)
-
--->
+Custom element [properties/attributes reference](https://cf-sw.bahrus.workers.dev/?href=https%3A%2F%2Fcdn.jsdelivr.net%2Fnpm%2Fob-session%400.0.10%2Fcustom-elements.json&stylesheet=https%3A%2F%2Fcdn.jsdelivr.net%2Fnpm%2Fwc-info%2Fsimple-ce-style.css&embedded=false&tags=&ts=2024-04-17T21%3A24%3A36.667Z&tocXSLT=https%3A%2F%2Fcdn.jsdelivr.net%2Fnpm%2Fwc-info%2Ftoc.xsl)
 
 ## Viewing Your Element
 
