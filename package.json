@@ -5,12 +5,11 @@
   "main": "ob-session-api.js",
   "module": "ob-session-api.js",
   "dependencies": {
-    "xtal-element": "0.0.602",
-    "trans-render": "0.0.756"
+    "trans-render": "0.0.760"
   },
   "devDependencies": {
     "may-it-serve": "0.0.6",
-    "may-it-be": "0.0.171",
+    "may-it-be": "0.0.178",
     "@power-elements/json-viewer": "2.1.1"
   },
   "scripts": {
