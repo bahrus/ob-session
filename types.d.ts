@@ -28,7 +28,7 @@ export interface Actions{
     onNoKey(self: this): ProPP,
     hydrate(self: this): PP,
     //getVals(self: this): PP,
-    //onSetItem(self: this): PP,
+    onSetItem(self: this): PP,
     onItemSet(self: this, e: SessionStorageEvent): PP,
     onItemRemove(self: this, e: SessionStorageEvent): PP,
 

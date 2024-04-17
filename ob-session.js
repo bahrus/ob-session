@@ -26,6 +26,11 @@ export class ObSession extends O {
             parsedVal: {
                 type: 'Object',
                 ro: true,
+            },
+            setItem: {
+                type: 'String',
+                parse: true,
+                attrName: 'set-item'
             }
         },
         actions: {
@@ -34,6 +39,9 @@ export class ObSession extends O {
             },
             hydrate: {
                 ifAllOf: ['key']
+            },
+            onSetItem: {
+                ifKeyIn: ['setItem']
             }
         },
         handlers: {
@@ -100,5 +108,10 @@ export class ObSession extends O {
             value: (val !== null && typeof val === 'object') ? JSON.stringify(val) : val,
             parsedVal: val === null ? null : (typeof val === 'object') ? val : JSON.parse(val),
         };
+    }
+    onSetItem(self) {
+        const { setItem, key } = self;
+        sessionStorage.setItem(key, setItem);
+        return {};
     }
 }
