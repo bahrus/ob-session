@@ -7,10 +7,15 @@ export interface EndUserProps{
     keyFormat: 'as-is' | 'camelCase' | 'CamelCase'
 }
 
-export interface AllProps extends EndUserProps{
+export interface ETProps{
+    window: Window;
+}
+
+export interface AllProps extends EndUserProps, ETProps{
     parsedVal: JSONObject | null,
     value: string | null,
-    isAttrParsed?: boolean,
+    //isAttrParsed?: boolean,
+    
 }
 
 export type PP = Partial<AllProps>;
@@ -22,8 +27,10 @@ export type PPE = [PP, ActionOnEventConfigs<AllProps, Actions>];
 export interface Actions{
     onNoKey(self: this): ProPP,
     hydrate(self: this): PP,
-    getVals(self: this): PP,
-    onSetItem(self: this): PP,
+    //getVals(self: this): PP,
+    //onSetItem(self: this): PP,
+    onItemSet(self: this, e: SessionStorageEvent): PP,
+    onItemRemove(self: this, e: SessionStorageEvent): PP,
 }
 
 export type session_storage_item_removed = 'session-storage-item-removed';
