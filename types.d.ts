@@ -54,9 +54,6 @@ export interface SessionStorageEvent{
 export type VM = AllProps & Actions;
 
 declare global {
-    interface HTMLElementTagNameMap {
-        'ob-session': {new(): VM},
-    }
     interface WindowEventMap {
         ['session-storage-item-set']: SessionStorageEvent,
         ['session-storage-item-removed']: SessionStorageEvent
