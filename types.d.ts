@@ -5,7 +5,7 @@ export interface EndUserProps{
     key: string,
     setItem: JSONObject,
     keyFormat: 'as-is' | 'camelCase' | 'CamelCase',
-    onchange: Function | string | boolean,
+    
 }
 
 export interface ETProps{

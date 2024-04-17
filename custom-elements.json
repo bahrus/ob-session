@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "./README.md",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "index.js",
+      "declarations": [
+        {
+          "tagName": "ob-session",
+          "name": "ob-session",
+          "kind": "class",
+          "members": [
+            {
+              "kind": "field",
+              "name": "key"
+            },
+            {
+              "kind": "field",
+              "name": "setItem"
+            },
+            {
+              "kind": "field",
+              "name": "keyFormat",
+              "default": "as-is",
+              "description": "undefined\n            Possible values:\n\n            \n            CamelCase\n            \n            as-is\n            \n            camelCase\n            \n\n            "
+            }
+          ],
+          "attributes": [
+            {
+              "name": "key"
+            },
+            {
+              "name": "set-item"
+            },
+            {
+              "name": "key-format"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

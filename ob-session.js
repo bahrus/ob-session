@@ -1,62 +1,11 @@
 import { O } from 'trans-render/froop/O.js';
-import { init, SessionStorageItemRemovedEvent, SessionStorageItemSetEvent } from './ob-session-api.js';
+import { init } from './ob-session-api.js';
 import { dispatchEvent } from 'trans-render/positractions/dispatchEvent.js';
+import { config } from './config.js';
 init();
 export class ObSession extends O {
     static formAssociated = true;
-    static config = {
-        name: 'ob-session',
-        propDefaults: {
-            keyFormat: 'as-is'
-        },
-        propInfo: {
-            key: {
-                type: 'String',
-                parse: true,
-                attrName: 'key'
-            },
-            window: {
-                type: 'Object',
-                ro: true,
-            },
-            value: {
-                type: 'String',
-                ro: true,
-            },
-            parsedVal: {
-                type: 'Object',
-                ro: true,
-            },
-            setItem: {
-                type: 'String',
-                parse: true,
-                attrName: 'set-item'
-            }
-        },
-        actions: {
-            onNoKey: {
-                ifNoneOf: ['key'],
-                ifAllOf: ['onchange']
-            },
-            hydrate: {
-                ifAllOf: ['key', 'onchange']
-            },
-            onSetItem: {
-                ifAllOf: ['key', 'onchange', 'setItem']
-            }
-        },
-        handlers: {
-            window_to_onItemSet_on: SessionStorageItemSetEvent.EventName,
-            window_to_onItemRemove_on: SessionStorageItemRemovedEvent.EventName,
-        },
-        positractions: [
-            {
-                do: 'de',
-                ifKeyIn: ['parsedVal'],
-                pass: ['$0', '`change`']
-            }
-        ]
-    };
+    static config = config;
     de = dispatchEvent;
     async onNoKey(self) {
         const { localName, keyFormat } = self;

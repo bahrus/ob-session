@@ -8,7 +8,8 @@
 		"strict": true,
 	},
 	"files":[
-		"index.ts"
+		"index.ts",
+		"doc.ts",
 	],
 	"exclude":[
 		"node_modules"

@@ -1,5 +1,6 @@
 {
   "name": "ob-session",
+  "type": "module",
   "version": "0.0.9",
   "description": "Make storing **ob**jects in **Session**Storage easier and faster",
   "main": "ob-session-api.js",
@@ -13,6 +14,7 @@
     "@power-elements/json-viewer": "2.1.1"
   },
   "scripts": {
+    "doc": "node doc.js",
     "test": "playwright test",
     "serve": "node node_modules/may-it-serve/serve.js",
     "safari": "npx playwright wk http://localhost:3030",
